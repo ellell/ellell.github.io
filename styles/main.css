@@ -1,0 +1,47 @@
+body {
+  font-family: 'Cantarell', sans-serif;
+  background-color: #2D5867;
+}
+
+#content {
+  text-align: center;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin-top: 140px;
+  position: relative;
+  border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 28px;
+  color: #222;
+  text-transform: uppercase;
+  padding: 40px 0;
+  margin: 0;
+}
+
+img {
+  width: 200px;
+  border-radius: 15px;
+}
+
+.social {
+  padding: 40px 0;
+}
+
+.fa {
+  font-size: 3em;
+  color: #fff;
+  padding: 0 5px;
+  opacity: 0.6;
+  transition: all 0.2s ease-in;
+}
+
+.fa:hover {
+  opacity: 1;
+  color: #333;
+}
