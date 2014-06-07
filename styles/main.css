@@ -10,6 +10,7 @@ body {
   margin-top: 140px;
   position: relative;
   border-radius: 5px;
+  width: 400px;
 }
 
 a {
@@ -17,7 +18,8 @@ a {
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: normal;
   color: #222;
   text-transform: uppercase;
   padding: 40px 0;
@@ -43,5 +45,12 @@ img {
 
 .fa:hover {
   opacity: 1;
-  color: #333;
+  color: #222;
+}
+
+@media(max-width: 480px) {
+  #content {
+    margin-top: 0;
+    width: 100%;
+  }
 }
