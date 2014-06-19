@@ -85,7 +85,7 @@ img {
 }
 
 @media(max-width: 480px) {
-  #content {
+  #container #content .info-box  {
     width: 100%;
   }
 }
