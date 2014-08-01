@@ -49,9 +49,24 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 40px;
+}
+
 img {
   width: 200px;
   border-radius: 15px;
+}
+
+.food-image {
+  width: 100px;
+  float: left;
+  padding-left: 15px;
+  padding-bottom: 15px;
 }
 
 .social {
