@@ -1,3 +1,4 @@
+/** Layout **/
 html {
   height: 100%;
 }
@@ -7,12 +8,6 @@ body {
   background-color: #2D5867;
   margin: 0 10px;
   height: 100%;
-}
-
-.background-image {
-  background-image: url('../img/background.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 #container {
@@ -36,8 +31,9 @@ body {
   margin: auto;
 }
 
-a {
-  text-decoration: none;
+/** Typo **/
+p {
+  margin-bottom: 40px;
 }
 
 h1 {
@@ -53,22 +49,11 @@ h2 {
   margin-top: 0;
 }
 
-p {
-  margin-bottom: 40px;
+a {
+  text-decoration: none;
 }
 
-img {
-  width: 200px;
-  border-radius: 15px;
-}
-
-.food-image {
-  width: 100px;
-  float: left;
-  padding-left: 15px;
-  padding-bottom: 15px;
-}
-
+/** Icons **/
 .social {
   padding: 40px 0;
 }
@@ -86,17 +71,17 @@ img {
   color: #222;
 }
 
-.photo-credit {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 5px;
-  color: #fff;
-  opacity: 0.7;
+/** Random **/
+img {
+  width: 200px;
+  border-radius: 15px;
 }
-.photo-credit a {
-  font-weight: bold;
-  color: #fff;
+
+.food-image {
+  width: 100px;
+  float: left;
+  padding-left: 15px;
+  padding-bottom: 15px;
 }
 
 @media(max-width: 480px) {
