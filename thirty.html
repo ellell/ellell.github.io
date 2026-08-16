@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30 i veckan</title>
+  <link rel="stylesheet" href="./thirty/styles.css" />
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">30-a-week tracker</p>
+        <h1>Logga det du äter och se vad som räknas.</h1>
+        <p class="hero-copy">Sök i listan, lägg till det du ätit och få en tydlig veckovy med poäng, kategorier och
+          vilka livsmedel som faktiskt räknas.</p>
+      </div>
+      <div class="hero-card">
+        <p class="hero-card-label">Veckosumma</p>
+        <p class="hero-card-value" data-total-points>0</p>
+        <p class="hero-card-footnote">poäng från kvalificerade växter</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel panel-input">
+        <div class="panel-header">
+          <h2>Lägg till mat</h2>
+          <p>Välj något du har ätit och spara det i veckologgen.</p>
+        </div>
+
+        <label class="field-label" for="search">Sök i listan</label>
+        <input id="search" class="search-input" type="search" placeholder="Till exempel broccoli, kiwi eller linser"
+          autocomplete="off" />
+
+        <div class="results-header">
+          <span data-results-count>0 träffar</span>
+          <span>Poäng räknas per underliggande växt</span>
+        </div>
+        <div class="search-results" data-search-results></div>
+      </section>
+
+      <section class="panel panel-log">
+        <div class="panel-header">
+          <h2>Din vecka</h2>
+          <p>Det här är det som just nu räknas mot målet.</p>
+        </div>
+
+        <div class="summary-grid">
+          <article>
+            <p class="summary-label">Totala poäng</p>
+            <p class="summary-value" data-total-points>0</p>
+          </article>
+          <article>
+            <p class="summary-label">Unika underliggande växter</p>
+            <p class="summary-value" data-unique-count>0</p>
+          </article>
+          <article>
+            <p class="summary-label">Räknade poster</p>
+            <p class="summary-value" data-entry-count>0</p>
+          </article>
+        </div>
+
+        <div class="list-section">
+          <div class="section-heading-row">
+            <h3>Räknas mot målet</h3>
+            <button class="ghost-button" data-clear-log type="button">Rensa logg</button>
+          </div>
+          <div class="log-list" data-log-list></div>
+        </div>
+
+        <div class="list-section">
+          <h3>Summering per underliggande växt</h3>
+          <div class="counted-list" data-counted-list></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./thirty/foods-data.js"></script>
+  <script src="./thirty/app.js"></script>
+</body>
+
+</html>
