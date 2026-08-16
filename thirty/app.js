@@ -1,17 +1,11 @@
 const searchInput = document.querySelector('#search');
-const resultsCount = document.querySelector('[data-results-count]');
-const searchResults = document.querySelector('[data-search-results]');
-const logList = document.querySelector('[data-log-list]');
-const countedList = document.querySelector('[data-counted-list]');
+const foodSheet = document.querySelector('[data-food-sheet]');
 const clearButton = document.querySelector('[data-clear-log]');
 const totalPointsNodes = document.querySelectorAll('[data-total-points]');
-const uniqueCountNode = document.querySelector('[data-unique-count]');
-const entryCountNode = document.querySelector('[data-entry-count]');
 
-const storageKey = 'thirty-week-log';
+const storageKey = 'thirty-sheet-selected';
 const foods = Array.isArray(window.FOODS_DATA) ? window.FOODS_DATA : [];
-const foodIndex = new Map(foods.map((food) => [food.id, food]));
-let entries = loadEntries();
+let selectedIds = loadSelectedIds();
 
 function normalizeLabel(value) {
   return String(value || '')
@@ -22,270 +16,88 @@ function normalizeLabel(value) {
     .trim();
 }
 
-function loadEntries() {
+function loadSelectedIds() {
   try {
     const parsed = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) {
+      return new Set();
+    }
+
+    return new Set(parsed.filter((value) => typeof value === 'string'));
   } catch {
-    return [];
+    return new Set();
   }
 }
 
-function saveEntries() {
-  window.localStorage.setItem(storageKey, JSON.stringify(entries));
-}
-
-function formatPoints(value) {
-  return new Intl.NumberFormat('sv-SE', { maximumFractionDigits: 2 }).format(value);
-}
-
-function formatDate(value) {
-  return new Intl.DateTimeFormat('sv-SE', {
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    day: 'numeric',
-    month: 'short',
-  }).format(new Date(value));
+function saveSelectedIds() {
+  window.localStorage.setItem(storageKey, JSON.stringify(Array.from(selectedIds)));
 }
 
 function getFilteredFoods(query = '') {
   const normalizedQuery = normalizeLabel(query);
-  return foods
-    .filter((food) => !normalizedQuery || food.searchKey.includes(normalizedQuery))
-    .slice(0, 40);
+  return foods.filter((food) => !normalizedQuery || food.searchKey.includes(normalizedQuery));
 }
 
-function addEntry(foodId) {
-  entries.unshift({
-    foodId,
-    servings: 1,
-    loggedAt: new Date().toISOString(),
-  });
-  saveEntries();
-  updateSummary();
-}
-
-function removeEntry(index) {
-  entries.splice(index, 1);
-  saveEntries();
-  updateSummary();
-}
-
-function renderSearchResults(query = '') {
+function renderSheet(query = '') {
   const visibleFoods = getFilteredFoods(query);
-  resultsCount.textContent = `${visibleFoods.length} träffar`;
 
   if (!visibleFoods.length) {
-    searchResults.innerHTML = '<p class="empty-state">Ingen träff. Prova en annan stavning.</p>';
+    foodSheet.innerHTML = '<p class="empty-state">Ingen träff. Prova en annan stavning.</p>';
     return;
   }
 
-  searchResults.innerHTML = visibleFoods
-    .map(
-      (food) => `
-        <article class="result-card">
-          <div>
-            <p class="result-name">${food.name}</p>
-            <p class="result-meta">${food.category} · underliggande växt: ${food.underlyingPlant} · ${formatPoints(food.points)} poäng</p>
-          </div>
-          <button class="add-button" type="button" data-food-id="${food.id}">Lägg till</button>
-        </article>
-      `,
-    )
-    .join('');
-}
-
-function scoreEntries() {
-  const countedEntryIndexes = new Set();
-  const seenUnderlyingPlants = new Set();
-  const counted = [];
-  const skipped = [];
-
-  const resolvedEntries = entries
-    .map((entry, entryIndex) => ({
-      entry,
-      entryIndex,
-      loggedAt: entry.loggedAt || '',
-    }))
-    .sort((left, right) => {
-      const leftTime = Date.parse(left.loggedAt);
-      const rightTime = Date.parse(right.loggedAt);
-      const leftValue = Number.isNaN(leftTime) ? 0 : leftTime;
-      const rightValue = Number.isNaN(rightTime) ? 0 : rightTime;
-
-      if (leftValue === rightValue) {
-        return left.entryIndex - right.entryIndex;
-      }
-
-      return leftValue - rightValue;
-    });
-
-  for (const { entry, entryIndex } of resolvedEntries) {
-    const food = foodIndex.get(entry.foodId);
-    if (!food || !food.qualifies) {
-      continue;
-    }
-
-    if (seenUnderlyingPlants.has(food.underlyingPlantKey)) {
-      continue;
-    }
-
-    seenUnderlyingPlants.add(food.underlyingPlantKey);
-    countedEntryIndexes.add(entryIndex);
-  }
-
-  for (const [entryIndex, entry] of entries.entries()) {
-    const food = foodIndex.get(entry.foodId);
-    if (!food) {
-      skipped.push({ ...entry, entryIndex, reason: 'Hittades inte i listan.' });
-      continue;
-    }
-
-    if (!food.qualifies) {
-      skipped.push({ ...entry, entryIndex, food, reason: 'Markerad som ej kvalificerande i källistan.' });
-      continue;
-    }
-
-    if (!countedEntryIndexes.has(entryIndex)) {
-      skipped.push({
-        ...entry,
-        entryIndex,
-        food,
-        reason: `Underliggande växt redan räknad: ${food.underlyingPlant}.`,
-      });
-      continue;
-    }
-
-    counted.push({
-      entryIndex,
-      food,
-      servings: Math.max(1, Number(entry.servings) || 1),
-      points: food.points,
-      loggedAt: entry.loggedAt || new Date().toISOString(),
-    });
-  }
-
-  const totalsByUnderlyingPlant = new Map();
-
-  for (const item of counted) {
-    const existing = totalsByUnderlyingPlant.get(item.food.underlyingPlantKey) || {
-      id: item.food.underlyingPlantKey,
-      name: item.food.underlyingPlant,
-      category: item.food.category,
-      points: 0,
-      foods: [],
-      comment: item.food.comment,
-      source: item.food.source,
-    };
-
-    existing.points += item.points;
-    if (!existing.foods.includes(item.food.name)) {
-      existing.foods.push(item.food.name);
-    }
-    totalsByUnderlyingPlant.set(item.food.underlyingPlantKey, existing);
-  }
-
-  return {
-    counted,
-    skipped,
-    totals: Array.from(totalsByUnderlyingPlant.values()).sort((left, right) => right.points - left.points || left.name.localeCompare(right.name, 'sv')),
-    totalPoints: counted.reduce((sum, item) => sum + item.points, 0),
-    uniqueCount: totalsByUnderlyingPlant.size,
-  };
-}
-
-function renderLogItems(counted, skipped) {
-  const allItems = [...counted, ...skipped]
-    .sort((left, right) => left.entryIndex - right.entryIndex)
-    .map((item) => {
-      const isCounted = 'points' in item;
-      const name = item.food?.name || item.foodId;
-      const category = item.food?.category || 'Okänd kategori';
-      const underlyingPlant = item.food?.underlyingPlant || 'okänd';
-      const pointsLabel = isCounted ? `${formatPoints(item.points)} poäng` : '0 poäng';
-      const reasonLabel = isCounted ? '' : ` · ${item.reason}`;
-      const cardClassName = isCounted ? 'log-card' : 'skipped-card';
-
-      return `
-        <article class="${cardClassName}">
-          <div>
-            <p class="log-name">${name}</p>
-            <p class="log-meta">${category} · underliggande växt: ${underlyingPlant} · ${pointsLabel}${reasonLabel} · ${formatDate(item.loggedAt)}</p>
-          </div>
-          <button class="remove-button" type="button" data-entry-index="${item.entryIndex}">Ta bort</button>
-        </article>
-      `;
-    })
-    .join('');
-
-  if (!allItems) {
-    logList.innerHTML = '<p class="empty-state">Inget loggat ännu. Börja med att lägga till något du har ätit.</p>';
-    return;
-  }
-
-  logList.innerHTML = allItems;
-}
-
-function renderCountedTotals(totals) {
-  if (!totals.length) {
-    countedList.innerHTML = '<p class="empty-state">När du har loggat mat visas räknade totalsummor här.</p>';
-    return;
-  }
-
-  countedList.innerHTML = totals
-    .map(
-      (item) => `
-        <article class="counted-card">
-          <div>
-            <p class="result-name">${item.name}</p>
-            <p class="result-meta">${item.category} · räknat från: ${item.foods.join(', ')}</p>
-          </div>
-          <div class="points-pill">${formatPoints(item.points)} p</div>
-        </article>
-      `,
-    )
+  foodSheet.innerHTML = visibleFoods
+    .sort((left, right) => left.name.localeCompare(right.name, 'sv'))
+    .map((food) => `
+      <label class="sheet-row">
+        <span class="sheet-check">
+          <input type="checkbox" data-food-id="${food.id}" ${selectedIds.has(food.id) ? 'checked' : ''} />
+          <span>${food.name}</span>
+        </span>
+      </label>
+    `)
     .join('');
 }
 
 function updateSummary() {
-  const score = scoreEntries();
+  const checkedFoods = foods.filter((food) => food.qualifies && selectedIds.has(food.id));
+  const totalPoints = checkedFoods.reduce((sum, food) => sum + food.points, 0);
+
   totalPointsNodes.forEach((node) => {
-    node.textContent = formatPoints(score.totalPoints);
+    node.textContent = String(totalPoints);
   });
-  uniqueCountNode.textContent = String(score.uniqueCount);
-  entryCountNode.textContent = String(score.counted.length);
-  renderLogItems(score.counted, score.skipped);
-  renderCountedTotals(score.totals);
 }
 
 searchInput.addEventListener('input', () => {
-  renderSearchResults(searchInput.value);
+  renderSheet(searchInput.value);
 });
 
-searchResults.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-food-id]');
-  if (!button) {
+foodSheet.addEventListener('change', (event) => {
+  const checkbox = event.target.closest('input[type="checkbox"][data-food-id]');
+  if (!checkbox) {
     return;
   }
 
-  addEntry(button.dataset.foodId);
-});
-
-logList.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-entry-index]');
-  if (!button) {
-    return;
+  if (checkbox.checked) {
+    selectedIds.add(checkbox.dataset.foodId);
+  } else {
+    selectedIds.delete(checkbox.dataset.foodId);
   }
 
-  removeEntry(Number(button.dataset.entryIndex));
-});
-
-clearButton.addEventListener('click', () => {
-  entries = [];
-  saveEntries();
+  saveSelectedIds();
   updateSummary();
 });
 
-renderSearchResults('');
+clearButton.addEventListener('click', () => {
+  const shouldClear = confirm('Är du säker på att du vill nollställa alla kryss?');
+  if (!shouldClear) {
+    return;
+  }
+  selectedIds = new Set();
+  saveSelectedIds();
+  renderSheet(searchInput.value);
+  updateSummary();
+});
+
+renderSheet('');
 updateSummary();

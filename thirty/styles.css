@@ -20,10 +20,7 @@ body {
   min-height: 100vh;
   font-family: 'Avenir Next', 'Segoe UI', sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(251, 224, 181, 0.92), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(217, 108, 61, 0.18), transparent 30%),
-    linear-gradient(135deg, #f4ecdf 0%, #f8f4eb 45%, #efe4d6 100%);
+  background: var(--bg);
 }
 
 button,
@@ -38,10 +35,6 @@ input {
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.7fr);
-  gap: 20px;
-  align-items: end;
   margin-bottom: 24px;
 }
 
@@ -63,7 +56,6 @@ h3 {
 h1,
 h2,
 h3,
-.hero-card-value,
 .summary-value {
   font-family: 'Iowan Old Style', 'Palatino Linotype', serif;
 }
@@ -71,10 +63,9 @@ h3,
 h1 {
   font-size: clamp(2.6rem, 6vw, 5.4rem);
   line-height: 0.95;
-  max-width: 10ch;
+  text-wrap: balance;
 }
 
-.hero-copy,
 .panel-header p,
 .results-header,
 .result-meta,
@@ -86,35 +77,9 @@ h1 {
   color: var(--muted);
 }
 
-.hero-copy {
-  max-width: 64ch;
-  margin: 16px 0 0;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.hero-card,
-.panel {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  backdrop-filter: blur(12px);
-  box-shadow: var(--shadow);
-}
-
-.hero-card {
-  border-radius: 28px;
-  padding: 24px;
-}
-
 .hero-card-label,
 .hero-card-footnote {
   margin: 0;
-}
-
-.hero-card-value {
-  margin: 8px 0;
-  font-size: clamp(3rem, 7vw, 4.8rem);
-  line-height: 0.9;
 }
 
 .layout {
@@ -123,9 +88,62 @@ h1 {
   gap: 20px;
 }
 
-.panel {
-  border-radius: 30px;
-  padding: 24px;
+.sheet-controls .field-label {
+  grid-column: 1 / -1;
+}
+
+.food-sheet {
+  margin-top: 14px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sheet-category {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(24, 35, 15, 0.1);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.sheet-category h3 {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+
+.sheet-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+
+.sheet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(24, 35, 15, 0.08);
+  cursor: pointer;
+}
+
+.sheet-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sheet-check span {
+  overflow-wrap: anywhere;
+}
+
+.sheet-points {
+  font-weight: 700;
+  color: #8d3e1d;
+  white-space: nowrap;
 }
 
 .panel-header {
@@ -146,8 +164,8 @@ h1 {
 
 .search-input {
   width: 100%;
-  padding: 16px 18px;
-  border-radius: 18px;
+  padding: 8px 12px;
+  border-radius: 8px;
   border: 1px solid rgba(24, 35, 15, 0.16);
   background: rgba(255, 255, 255, 0.78);
   outline: none;
@@ -187,7 +205,7 @@ h1 {
   gap: 16px;
   align-items: center;
   padding: 14px 16px;
-  border-radius: 20px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(24, 35, 15, 0.08);
 }
@@ -224,7 +242,7 @@ h1 {
 .remove-button,
 .ghost-button {
   padding: 10px 12px;
-  border-radius: 999px;
+  border-radius: 8px;
   background: rgba(24, 35, 15, 0.06);
   color: var(--ink);
 }
@@ -292,8 +310,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  h1 {
-    max-width: 12ch;
+  .sheet-rows {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -301,12 +319,6 @@ h1 {
   .page-shell {
     width: min(100% - 20px, 100%);
     padding-top: 20px;
-  }
-
-  .panel,
-  .hero-card {
-    padding: 18px;
-    border-radius: 24px;
   }
 
   .summary-grid {
@@ -321,6 +333,10 @@ h1 {
   .results-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .sheet-controls {
+    grid-template-columns: 1fr;
   }
 
   .add-button,
