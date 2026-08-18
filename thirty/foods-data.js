@@ -1044,16 +1044,52 @@ window.FOODS_DATA = [
     "searchKey": "korsbarstomat"
   },
   {
-    "id": "paprika",
-    "name": "paprika",
+    "id": "paprika rod",
+    "name": "paprika (röd)",
     "category": "Grönsaker",
     "points": 1,
     "qualifies": true,
-    "underlyingPlant": "paprika",
-    "underlyingPlantKey": "paprika",
+    "underlyingPlant": "röd",
+    "underlyingPlantKey": "rod",
     "comment": "1 poäng när denna växttyp är ny i veckans lista.",
     "source": "https://zoe.com/learn/30-plants-per-week",
-    "searchKey": "paprika"
+    "searchKey": "paprika rod"
+  },
+  {
+    "id": "paprika gul",
+    "name": "paprika (gul)",
+    "category": "Grönsaker",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "gul",
+    "underlyingPlantKey": "gul",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "paprika gul"
+  },
+  {
+    "id": "paprika gron",
+    "name": "paprika (grön)",
+    "category": "Grönsaker",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "grön",
+    "underlyingPlantKey": "gron",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "paprika gron"
+  },
+  {
+    "id": "orange",
+    "name": "orange",
+    "category": "Grönsaker",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "orange",
+    "underlyingPlantKey": "orange",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "orange"
   },
   {
     "id": "chili",
@@ -1392,16 +1428,28 @@ window.FOODS_DATA = [
     "searchKey": "sockerarta"
   },
   {
-    "id": "arter",
-    "name": "ärter",
+    "id": "artor grona",
+    "name": "ärtor (gröna)",
     "category": "Grönsaker",
     "points": 1,
     "qualifies": true,
-    "underlyingPlant": "ärter",
-    "underlyingPlantKey": "arter",
+    "underlyingPlant": "ärtor",
+    "underlyingPlantKey": "artor",
     "comment": "1 poäng när denna växttyp är ny i veckans lista.",
     "source": "https://zoe.com/learn/30-plants-per-week",
-    "searchKey": "arter"
+    "searchKey": "artor grona"
+  },
+  {
+    "id": "artor gula",
+    "name": "ärtor (gula)",
+    "category": "Grönsaker",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "ärtor",
+    "underlyingPlantKey": "artor",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "artor gula"
   },
   {
     "id": "bondbonor",
@@ -1414,6 +1462,18 @@ window.FOODS_DATA = [
     "comment": "1 poäng när denna växttyp är ny i veckans lista.",
     "source": "https://zoe.com/learn/30-plants-per-week",
     "searchKey": "bondbonor"
+  },
+  {
+    "id": "haricot verts",
+    "name": "haricot verts",
+    "category": "Grönsaker",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "haricot verts",
+    "underlyingPlantKey": "haricot verts",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "haricot verts"
   },
   {
     "id": "kronartskocka",
@@ -1572,8 +1632,8 @@ window.FOODS_DATA = [
     "searchKey": "batavia"
   },
   {
-    "id": "linser",
-    "name": "linser",
+    "id": "linser roda",
+    "name": "linser (röda)",
     "category": "Baljväxter",
     "points": 1,
     "qualifies": true,
@@ -1581,7 +1641,31 @@ window.FOODS_DATA = [
     "underlyingPlantKey": "linser",
     "comment": "1 poäng när denna växttyp är ny i veckans lista.",
     "source": "https://zoe.com/learn/30-plants-per-week",
-    "searchKey": "linser"
+    "searchKey": "linser roda"
+  },
+  {
+    "id": "linser grona",
+    "name": "linser (gröna)",
+    "category": "Baljväxter",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "linser",
+    "underlyingPlantKey": "linser",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "linser grona"
+  },
+  {
+    "id": "bruna",
+    "name": "bruna",
+    "category": "Baljväxter",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "bruna",
+    "underlyingPlantKey": "bruna",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "bruna"
   },
   {
     "id": "puylinser",
@@ -1992,18 +2076,6 @@ window.FOODS_DATA = [
     "searchKey": "brunris"
   },
   {
-    "id": "svart",
-    "name": "svart",
-    "category": "Fullkorn",
-    "points": 1,
-    "qualifies": true,
-    "underlyingPlant": "svart",
-    "underlyingPlantKey": "svart",
-    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
-    "source": "https://zoe.com/learn/30-plants-per-week",
-    "searchKey": "svart"
-  },
-  {
     "id": "ris",
     "name": "ris",
     "category": "Fullkorn",
@@ -2014,6 +2086,18 @@ window.FOODS_DATA = [
     "comment": "1 poäng när denna växttyp är ny i veckans lista.",
     "source": "https://zoe.com/learn/30-plants-per-week",
     "searchKey": "ris"
+  },
+  {
+    "id": "rott",
+    "name": "rött",
+    "category": "Fullkorn",
+    "points": 1,
+    "qualifies": true,
+    "underlyingPlant": "rött",
+    "underlyingPlantKey": "rott",
+    "comment": "1 poäng när denna växttyp är ny i veckans lista.",
+    "source": "https://zoe.com/learn/30-plants-per-week",
+    "searchKey": "rott"
   },
   {
     "id": "vildris",
