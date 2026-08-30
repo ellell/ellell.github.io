@@ -347,6 +347,8 @@ h1 {
 .cannon-stage {
   --cn-x: 16px;
   --cn-dir: 1;
+  position: fixed;
+  bottom: 0;
 }
 
 .cannon-piece {
