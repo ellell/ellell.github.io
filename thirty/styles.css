@@ -342,3 +342,53 @@ h1 {
     width: 100%;
   }
 }
+
+/* confetti cannon */
+.cannon-stage {
+  --cn-x: 16px;
+  --cn-dir: 1;
+}
+
+.cannon-piece {
+  position: absolute;
+  left: var(--cn-x);
+  bottom: 16px;
+  opacity: 0;
+  animation: confetti-cannon 11.6s linear 1 forwards;
+  animation-name: none;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+}
+
+.fire.cannon-stage .cannon-piece {
+  animation-name: confetti-cannon;
+}
+
+@keyframes confetti-cannon {
+  0%   { transform: translate(calc(var(--dx) * 0 * var(--cn-dir)), calc(var(--peak) * 0)) rotate(0deg) scale(.35); opacity: 0; }
+  8%   { transform: translate(calc(var(--dx) * .12 * var(--cn-dir)), calc(var(--peak) * -.42)) rotate(60deg) scale(1); opacity: 1; }
+  45%  { transform: translate(calc(var(--dx) * .55 * var(--cn-dir)), calc(var(--peak) * -1)) rotate(300deg) scale(1); }
+  65%  { transform: translate(calc(var(--dx) * .75 * var(--cn-dir)), calc(var(--peak) * -.82)) rotate(420deg) scale(1); opacity: 1; }
+  100% { transform: translate(calc(var(--dx) * 1 * var(--cn-dir)), calc(var(--peak) * .55)) rotate(620deg) scale(1); opacity: 0; }
+}
+
+/* angle and power per piece, shared by all three directions */
+.cannon-piece:nth-child(1) { --dx: 386px; --peak: 35px; background: #FF5E7E; width: 6px; height: 14px; animation-duration: 1.45s; animation-delay: 0.0s; }
+.cannon-piece:nth-child(2) { --dx: 422px; --peak: 46px; background: #FFA8A8; width: 10px; height: 10px; animation-duration: 1.58s; animation-delay: 0.035s; }
+.cannon-piece:nth-child(3) { --dx: 455px; --peak: 58px; background: #FFD6A5; width: 14px; height: 6px; animation-duration: 1.71s; animation-delay: 0.07s; border-radius: 50%; }
+.cannon-piece:nth-child(4) { --dx: 486px; --peak: 71px; background: #CAFFBF; width: 8px; height: 8px; animation-duration: 1.84s; animation-delay: 0.105s; }
+.cannon-piece:nth-child(5) { --dx: 514px; --peak: 85px; background: #9BF6FF; width: 12px; height: 6px; animation-duration: 1.97s; animation-delay: 0.14s; }
+.cannon-piece:nth-child(6) { --dx: 381px; --peak: 71px; background: #FF5E7E; width: 6px; height: 10px; animation-duration: 1.45s; animation-delay: 0.175s; }
+.cannon-piece:nth-child(7) { --dx: 407px; --peak: 85px; background: #FFA8A8; width: 10px; height: 14px; animation-duration: 1.58s; animation-delay: 0.0s; border-radius: 50%; }
+.cannon-piece:nth-child(8) { --dx: 430px; --peak: 100px; background: #FFD6A5; width: 14px; height: 8px; animation-duration: 1.71s; animation-delay: 0.035s; }
+.cannon-piece:nth-child(9) { --dx: 450px; --peak: 116px; background: #CAFFBF; width: 8px; height: 12px; animation-duration: 1.84s; animation-delay: 0.07s; }
+.cannon-piece:nth-child(10) { --dx: 328px; --peak: 93px; background: #9BF6FF; width: 12px; height: 8px; animation-duration: 1.97s; animation-delay: 0.105s; }
+.cannon-piece:nth-child(11) { --dx: 346px; --peak: 108px; background: #FF5E7E; width: 6px; height: 14px; animation-duration: 1.45s; animation-delay: 0.14s; border-radius: 50%; }
+.cannon-piece:nth-child(12) { --dx: 360px; --peak: 124px; background: #FFA8A8; width: 10px; height: 10px; animation-duration: 1.58s; animation-delay: 0.175s; }
+.cannon-piece:nth-child(13) { --dx: 371px; --peak: 141px; background: #FFD6A5; width: 14px; height: 6px; animation-duration: 1.71s; animation-delay: 0.0s; }
+.cannon-piece:nth-child(14) { --dx: 264px; --peak: 111px; background: #CAFFBF; width: 8px; height: 8px; animation-duration: 1.84s; animation-delay: 0.035s; }
+.cannon-piece:nth-child(15) { --dx: 273px; --peak: 127px; background: #9BF6FF; width: 12px; height: 6px; animation-duration: 1.97s; animation-delay: 0.07s; border-radius: 50%; }
+.cannon-piece:nth-child(16) { --dx: 279px; --peak: 143px; background: #FF5E7E; width: 6px; height: 10px; animation-duration: 1.45s; animation-delay: 0.105s; }
+.cannon-piece:nth-child(17) { --dx: 280px; --peak: 160px; background: #FFA8A8; width: 10px; height: 14px; animation-duration: 1.58s; animation-delay: 0.14s; }
+.cannon-piece:nth-child(18) { --dx: 193px; --peak: 123px; background: #FFD6A5; width: 14px; height: 8px; animation-duration: 1.71s; animation-delay: 0.175s; }

@@ -2,6 +2,7 @@ const searchInput = document.querySelector('#search');
 const foodSheet = document.querySelector('[data-food-sheet]');
 const clearButton = document.querySelector('[data-clear-log]');
 const totalPointsNodes = document.querySelectorAll('[data-total-points]');
+const canonStage = document.querySelector('.cannon-stage')
 
 const storageKey = 'thirty-sheet-selected';
 const foods = Array.isArray(window.FOODS_DATA) ? window.FOODS_DATA : [];
@@ -66,6 +67,13 @@ function updateSummary() {
   totalPointsNodes.forEach((node) => {
     node.textContent = String(totalPoints);
   });
+
+  const goalScore = 30;
+  if (totalPoints >= goalScore) {
+    canonStage.classList.add('fire')
+  } else if (totalPoints < goalScore) {
+    canonStage.classList.remove('fire')
+  }
 }
 
 searchInput.addEventListener('input', () => {
